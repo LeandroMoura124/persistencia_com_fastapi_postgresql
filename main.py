@@ -45,6 +45,15 @@ def read_students(db: Session = Depends(get_db)):
     return students
 
 
+@app.get('/estudantes/{estudante_id}', response_model=schemas.EstudanteResponse)
+def read_student(estudante_id: int, db: Session = Depends(get_db)):
+    """Retorna um estudante pelo id. 404 se não existir."""
+    db_student = db.query(models.Estudante).filter(models.Estudante.id == estudante_id).first()
+    if db_student is None:
+        raise HTTPException(status_code=404, detail="Estudante não encontrado")
+    return db_student
+
+
 @app.get('/estudantes/com-matriculas')
 def read_students_with_matriculas(db: Session = Depends(get_db)):
     estudantes = db.query(models.Estudante).all()
