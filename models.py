@@ -3,7 +3,7 @@ from database import Base
 
 
 class Estudante(Base):
-    _tablename_ = "estudantes"
+    __tablename__ = "estudantes"
     id = Column(
         Integer,
         primary_key=True,
@@ -16,11 +16,14 @@ class Estudante(Base):
 
 
 class Matricula(Base):
-    __table_name__ = "matriculas"
+    __tablename__ = "matriculas"
     id = Column(
-        Integer, 
-        primary_key=True, 
-        Index=True)
+        Integer,
+        primary_key=True,
+        index=True)
     estudante_id = Column(
         Integer,
-        ForeignKey("estudante.id"))
+        ForeignKey("estudantes.id"))
+    nome_disciplina = Column(
+        String(100),
+        nullable=False)
